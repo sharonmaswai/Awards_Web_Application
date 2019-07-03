@@ -1,10 +1,10 @@
 from django import forms
-from .models import Profile,Projects
+from .models import Profile,Project
 
 
 class ProjectForm(forms.ModelForm):
     class Meta:
-        model = Projects
+        model = Project
         fields = ('title','image','description', 'link')
         
         
