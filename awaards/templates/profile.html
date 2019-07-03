@@ -1,0 +1,50 @@
+{%extends 'base.html'%}
+
+{% block content %}
+{{block.super}}
+<br><br><br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <img src="{{profile.profile_pic.url}}" alt="" width="150px" height="150px" class="rounded-circle">
+      </div>
+      <div class="col-md-6 col-sm-12">
+      <div class="bio">
+        <div class="ok">
+          
+        </div>
+        <div class="button">
+          <a href="{%url 'profile-form'%}" style="border:1px solid lightgrey;border-radius:2px;color:black;text-decoration:none">Edit profile</a>
+        </div>
+        <div class="cog">
+          <i class="fas fa-cog"></i>
+        </div>
+        <p>{{profile.name}}</p>
+      </div><br><br>
+      <h2>Bio</h2>
+    {{profile.bio}}
+      </div>
+    </div>
+    <br><hr>
+    <div class="row">
+      {%for upload in project%}
+      <div class="col-md-4 image-holder ">
+          
+          <img class="display" src="{{upload.image.url}}" alt="" style="width: 320px; height: 300px;" > <br> <br> <br>
+         
+      </div>
+      {% empty %}
+      <div class="col-md-12">
+          <h2> There are no websites created yet</h2>
+      </div>
+      <br>
+      <br>
+     <br> 
+
+      {%endfor%}
+    </div>
+   
+  </div>
+
+
+{% endblock %}
