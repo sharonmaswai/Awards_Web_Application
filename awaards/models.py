@@ -42,7 +42,7 @@ class Project(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     technology = models.CharField(max_length=20)
-    image = models.FilePathField(upload_to="projects/")
+    image = models.ImageField(upload_to="projects/")
     usability=models.IntegerField(default=0)
     content=models.IntegerField(default=0)
     link = URLOrRelativeURLField(max_length=200)
