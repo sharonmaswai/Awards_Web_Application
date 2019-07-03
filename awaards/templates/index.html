@@ -1,1 +1,43 @@
-Test!!!!
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+{%block content%}
+<style>
+    .image{
+        background-image:url('https://images.pexels.com/photos/1937394/pexels-photo-1937394.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
+        filter: blur(1px);
+        -webkit-filter: blur(1px);
+
+        /* Full height */
+        height: 600px;
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .bg-text {
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+        color: white;
+        font-weight: bold;
+        border: 3px solid #f1f1f1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        width: 80%;
+        padding: 100px;
+        text-align: center;
+    }
+</style>
+<body>
+<div class="image">
+
+</div>
+<div class="bg-text">
+<h1>AWAARDS</h1>
+<p>The Projects' Gallery</p>
+</div>
+    
+</body>
+{%endblock%}
