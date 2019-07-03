@@ -9,11 +9,10 @@ from url_or_relative_url_field.fields import URLOrRelativeURLField
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
-    profile_photo = models.ImageField(default='image.png',upload_to='profiles/')
+    profile_pic = models.ImageField(default='image.png',upload_to='profiles/')
     bio = HTMLField(max_length=500,default='About me')
-    website = URLOrRelativeURLField() 
     phone_number = models.CharField(max_length=10,default=000000)
-   
+    website = URLOrRelativeURLField() 
     @receiver(post_save, sender=User)
     def create_profile(sender, instance, created, **kwargs):
         if created:
@@ -44,7 +43,31 @@ class Project(models.Model):
     technology = models.CharField(max_length=20)
     image = models.ImageField(upload_to="projects/")
     usability=models.IntegerField(default=0)
+    design=models.IntegerField(default=0)
+
     content=models.IntegerField(default=0)
     link = URLOrRelativeURLField(max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)
+    
+    @classmethod
+    def search_by_projects(cls,search_term):
+        projects = cls.objects.filter(title__icontains=search_term)
+        print(projects)
+        return projects 
+    
+    @classmethod
+    def get_profile_projects(cls,profile):
+       projects = Projects.objects.filter(profile__pk=profile)
+       print(projects)
+       return projects
+    
+    
+    def __str__(self):
+        return self.title
+class Rating(models.Model):
+    design = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
+    usability = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
+    content = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)]) 
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    project = models.IntegerField(default=0) 
     
