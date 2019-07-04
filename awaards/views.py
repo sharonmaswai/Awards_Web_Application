@@ -33,7 +33,7 @@ def profile(request):
     
     return render(request,'profile.html',{'profile':profile,'project':project})
 def upload_project(request):
-current_user = request.user
+    current_user = request.user
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
