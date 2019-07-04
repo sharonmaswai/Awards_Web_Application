@@ -75,13 +75,13 @@ def rate(request,id):
     return render(request, 'rating.html', {'form':form, 'project':project})
 def rate_project(request,project_id):
    
-    project=Project.objects.get(id=project_id)
-    ratings=Rating.objects.filter(project_id=project)
+    projects=Project.objects.filter(id=project_id)
+    ratings=Rating.objects.filter(project_id=projects)
     average_rating=[]
     mean_rate=0
         
     for rating in ratings:
-        average_rating.append(average_vote)
+        average_rating.append(rating.average_vote)
             
     total_rates=sum(average_rating)
     if len(ratings)>0:
@@ -91,5 +91,5 @@ def rate_project(request,project_id):
         total_rating=0
         mean_rate=total_rating  
     
-    return render(request, 'single-project.html',{'project':project,'mean_rate':mean_rate})
+    return render(request, 'single-project.html',{'projects':projects,'mean_rate':mean_rate})
 

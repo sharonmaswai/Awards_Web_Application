@@ -11,7 +11,7 @@ urlpatterns=[
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^upload/', views.upload_project, name='upload'),
     url(r'^projects/', views.projects, name='projects'),
-    url(r'^rate_project/(\d+)/', views.rate_project, name='rate'),
+    url(r'^rate_project/(\d+)/', views.rate_project, name='rate_project'),
     url(r'^rate_form/(\d+)/',views.rate, name='rateform'),
     url(r'^search/', views.search_results, name='search_results')
 ]

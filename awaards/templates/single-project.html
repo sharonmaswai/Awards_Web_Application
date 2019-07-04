@@ -21,7 +21,7 @@
                         <p class="black-text pull-right">{{project.pub_date|date:"F d,Y"}}</p>
                         <h6>By  {{project.profile}}</h6>
                         <p>Average Rating:{{mean_rate}}</p>
-                        <a class="btn btn-dark" href="{% url 'rateform' project.id %}"><i class="fas fa-clone left"></i> >Rate</a>
+                        <a class="btn btn-dark" href="{% url 'rateform' project.id %}"><i class="fas fa-clone left"></i> Rate Project </a>
                         <a class="btn btn-dark" href="{{project.link}}"><i class="fas fa-clone left"></i> See Project</a>
                     </div>
                     
