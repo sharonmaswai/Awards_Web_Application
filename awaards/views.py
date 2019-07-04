@@ -6,7 +6,7 @@ from .forms import ProfileForm, ProjectForm
 # Create your views here.
 def index(request):
     project = Project.objects.all()
-    return render(request, 'index.html', {'project':project}) 
+    return render(request, 'index.html', {'project':project, }) 
 def create_profile(request):
   
     
