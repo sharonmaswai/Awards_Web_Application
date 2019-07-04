@@ -1,40 +1,13 @@
 {%extends 'base.html'%}
 {% load bootstrap4 %}
 {%block content%}
-<style>
-    .image{
-        background-image:url('https://images.pexels.com/photos/1937394/pexels-photo-1937394.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
-        filter: blur(1px);
-        -webkit-filter: blur(1px);
 
-        /* Full height */
-        height: 600px;
-        /* Center and scale the image nicely */
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    .bg-text {
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-        color: white;
-        font-weight: bold;
-        border: 3px solid #f1f1f1;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        width: 80%;
-        padding: 100px;
-        text-align: center;
-    }
-</style>
 <body>
     <div class="container-fluid">
             <div class="row">
                     {% for project in projects %}
-                    <div class="col-md-4">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 ">
                     <div class="card-group "  style="margin:2%;" data-aos='fade-up'>
                             <div class="view overlay zoom ">
                                     <img src="{{project.image.url}}" class="card-img-top">
@@ -47,12 +20,15 @@
                         <a href=""><h5 class="strong-text"> <strong>{{project.title}}</strong> </h5> </a> <hr class="bg-info">
                         <p class="black-text pull-right">{{project.pub_date|date:"F d,Y"}}</p>
                         <h6>By  {{project.profile}}</h6>
-                     
+                        <p>Average Rating:{{mean_rate}}</p>
+                        <a class="btn btn-dark" href="{% url 'rateform' project.id %}"><i class="fas fa-clone left"></i> >Rate</a>
+                        <a class="btn btn-dark" href="{{project.link}}"><i class="fas fa-clone left"></i> See Project</a>
                     </div>
                     
                     </div>
                     
                     </div>
+                    <div class="col-md-2"></div>
                     {% endfor %} 
             </div>
             

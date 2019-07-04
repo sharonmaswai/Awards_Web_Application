@@ -8,15 +8,12 @@ def index(request):
     projects = Project.objects.all()
     return render(request, 'index.html', {'projects':projects}) 
 def create_profile(request):
-  
-    
-    
     current_user = request.user
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             profile = form.save(commit=False)
-            # profile.username = current_user
+            profile.username = current_user
             profile.user=current_user.id
             profile.save()
 
@@ -66,18 +63,16 @@ def rate(request,id):
     if request.method == 'POST':
         form = RateForm(request.POST)
         if form.is_valid():
-        
-           
             project_rating = form.save(commit=False)
-            project_rating.average_vote=round((user_rating.usability_vote + user_rating.content_vote + user_rating.design_vote)/3)
+            project_rating.average_vote=round((project_rating.usability + project_rating.content+ project_rating.design)/3)
             project_rating.project=project
             project_rating.user=current_user
             project_rating.save()
             return redirect('projects')
     else: 
-        rateform=RatingForm()
+        form=RateForm()
     
-    return render(request, 'rating.html', {'rateform':rateform, 'project':project})
+    return render(request, 'rating.html', {'form':form, 'project':project})
 def rate_project(request,project_id):
    
     project=Project.objects.get(id=project_id)
@@ -88,13 +83,13 @@ def rate_project(request,project_id):
     for rating in ratings:
         average_rating.append(average_vote)
             
-    final_rates=sum(average_rates)
+    total_rates=sum(average_rating)
     if len(ratings)>0:
-        total_rating=final_rates/len(ratings)
-        mean_rate=overall_rating
+        total_rating=total_rates/len(ratings)
+        mean_rate=total_rating
     else:
-        overall_rating=0
+        total_rating=0
         mean_rate=total_rating  
     
-    return render(request, 'single-project.html',{'project':project,'overall_final_rating':overall_final_rating})
+    return render(request, 'single-project.html',{'project':project,'mean_rate':mean_rate})
 
