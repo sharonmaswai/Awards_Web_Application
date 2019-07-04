@@ -6,7 +6,7 @@ from .forms import ProfileForm, ProjectForm
 # Create your views here.
 def index(request):
     project = Project.objects.all()
-    return render(request, 'index.html', {'project':project, }) 
+    return render(request, 'index.html', {'project':project}) 
 def create_profile(request):
   
     
@@ -38,10 +38,12 @@ def upload_project(request):
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             index= form.save(commit=False)
-            index.profile =current_user
-            form.save()
+            
         return redirect('index')
     else:
         form =ProjectForm()
             
     return render(request,'project-upload.html',{"form":form,})
+def projects(request):
+    project = Project.objects.all()
+    return render(request, 'projects.html', {'project':project}) 

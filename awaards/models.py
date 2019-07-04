@@ -14,7 +14,7 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=10,default=000000)
     website = URLOrRelativeURLField() 
     
-     def save_profile(self):
+    def save_profile(self):
         self.save()
         
     def delete_profile(self):
