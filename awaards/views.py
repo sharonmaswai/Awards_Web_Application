@@ -56,3 +56,31 @@ def search_results(request):
         searched_item=Project.search_project(search_term)
         
     return render(request,'search.html',{'searched_item':searched_item})  
+def rate(request,id):
+    
+    project=Project.objects.get(id=id)
+    current_user = request.user
+   
+    ratings=Rating.objects.filter(project_id=project.id)
+   
+    if request.method == 'POST':
+        form = RatingForm(request.POST)
+        if form.is_valid():
+        
+           
+            project_rating = form.save(commit=False)
+            
+           
+            project_rating.average_vote=round((user_rating.usability_vote + user_rating.content_vote + user_rating.design_vote)/3)
+            
+            
+            project_rating.project=project
+            
+            project_rating.user=current_user
+            
+            project_rating.save()
+            return redirect('projects')
+    else: 
+        rateform=RatingForm()
+    
+    return render(request, 'rating.html', {'rateform':rateform, 'project':project})
