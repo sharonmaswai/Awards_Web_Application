@@ -37,7 +37,8 @@ def upload_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
-            index= form.save(commit=False)
+            print()
+            index= form.save()
             
         return redirect('index')
     else:
@@ -45,5 +46,5 @@ def upload_project(request):
             
     return render(request,'project-upload.html',{"form":form,})
 def projects(request):
-    project = Project.objects.all()
-    return render(request, 'projects.html', {'project':project}) 
+    projects = Project.objects.all()
+    return render(request, 'projects.html', {'projects':projects}) 
