@@ -55,4 +55,4 @@ def search_results(request):
         
         searched_project=Project.search_project(project_name)
         
-    return render(request,'search_results.html',{'searched_project':searched_project})  
+    return render(request,'search.html',{'searched_project':searched_project})  
