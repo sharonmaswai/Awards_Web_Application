@@ -70,7 +70,7 @@ class Rating(models.Model):
     usability = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
     content = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)]) 
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    average_vote=models.FloatField()
+    average_vote=models.FloatField(default=0)
     project = models.IntegerField(default=0) 
     
     def save_rating(self):
