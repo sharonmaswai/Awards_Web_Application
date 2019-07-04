@@ -5,8 +5,8 @@ from .forms import ProfileForm, ProjectForm
 
 # Create your views here.
 def index(request):
-    project = Project.objects.all()
-    return render(request, 'index.html', {'project':project}) 
+    projects = Project.objects.all()
+    return render(request, 'index.html', {'projects':projects}) 
 def create_profile(request):
   
     
@@ -48,3 +48,11 @@ def upload_project(request):
 def projects(request):
     projects = Project.objects.all()
     return render(request, 'projects.html', {'projects':projects}) 
+def search_results(request):
+    
+    if 'search_project' in request.GET and request.GET['search_project']:
+        project_name=request.GET.get('search_project')
+        
+        searched_project=Project.search_project(project_name)
+        
+    return render(request,'search_results.html',{'searched_project':searched_project})  

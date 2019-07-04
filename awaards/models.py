@@ -56,7 +56,11 @@ class Project(models.Model):
        projects = Projects.objects.filter(profile__pk=profile)
        print(projects)
        return projects
-    
+    def search_project(cls, search_term):
+        
+        searched_item=Project.objects.filter(project_title__icontains=search_term)
+        return searched_project
+        
     
     def __str__(self):
         return self.title
