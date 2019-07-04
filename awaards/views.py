@@ -51,8 +51,8 @@ def projects(request):
 def search_results(request):
     
     if 'search_project' in request.GET and request.GET['search_project']:
-        project_name=request.GET.get('search_project')
+        search_term=request.GET.get('search_project')
         
-        searched_project=Project.search_project(project_name)
+        searched_item=Project.search_project(search_term)
         
-    return render(request,'search.html',{'searched_project':searched_project})  
+    return render(request,'search.html',{'searched_item':searched_item})  

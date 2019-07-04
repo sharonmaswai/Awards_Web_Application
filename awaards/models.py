@@ -56,10 +56,11 @@ class Project(models.Model):
        projects = Projects.objects.filter(profile__pk=profile)
        print(projects)
        return projects
+    @classmethod   
     def search_project(cls, search_term):
         
-        searched_item=Project.objects.filter(project_title__icontains=search_term)
-        return searched_project
+        searched_item=Project.objects.filter(title__icontains=search_term)
+        return searched_item
         
     
     def __str__(self):
@@ -69,5 +70,21 @@ class Rating(models.Model):
     usability = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
     content = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)]) 
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+    average_vote=models.FloatField()
     project = models.IntegerField(default=0) 
     
+    def save_rating(self):
+       
+        self.save()
+        
+    def delete_rating(self):
+        
+        self.delete()
+        
+    def update_rating(self):
+       
+        self.update()
+        
+   
+    def __str__(self):
+        return self.name
