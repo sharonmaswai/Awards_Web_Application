@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Profile, Project
+from .models import Profile, Project, Rating
 from django.contrib.auth.models import User
-from .forms import ProfileForm, ProjectForm
+from .forms import ProfileForm, ProjectForm, RateForm
 
 # Create your views here.
 def index(request):
@@ -64,23 +64,37 @@ def rate(request,id):
     ratings=Rating.objects.filter(project_id=project.id)
    
     if request.method == 'POST':
-        form = RatingForm(request.POST)
+        form = RateForm(request.POST)
         if form.is_valid():
         
            
             project_rating = form.save(commit=False)
-            
-           
             project_rating.average_vote=round((user_rating.usability_vote + user_rating.content_vote + user_rating.design_vote)/3)
-            
-            
             project_rating.project=project
-            
             project_rating.user=current_user
-            
             project_rating.save()
             return redirect('projects')
     else: 
         rateform=RatingForm()
     
     return render(request, 'rating.html', {'rateform':rateform, 'project':project})
+def rate_project(request,project_id):
+   
+    project=Project.objects.get(id=project_id)
+    ratings=Rating.objects.filter(project_id=project)
+    average_rating=[]
+    mean_rate=0
+        
+    for rating in ratings:
+        average_rating.append(average_vote)
+            
+    final_rates=sum(average_rates)
+    if len(ratings)>0:
+        total_rating=final_rates/len(ratings)
+        mean_rate=overall_rating
+    else:
+        overall_rating=0
+        mean_rate=total_rating  
+    
+    return render(request, 'single-project.html',{'project':project,'overall_final_rating':overall_final_rating})
+
