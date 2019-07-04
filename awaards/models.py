@@ -13,27 +13,22 @@ class Profile(models.Model):
     bio = HTMLField(max_length=500,default='About me')
     phone_number = models.CharField(max_length=10,default=000000)
     website = URLOrRelativeURLField() 
-    @receiver(post_save, sender=User)
-    def create_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
-     
-    @receiver(post_save, sender=User) 
-    def save_profile(sender,instance,**kwargs):
-        instance.profile.save()  
+    
+     def save_profile(self):
+        self.save()
         
-    
+    def delete_profile(self):
+        self.delete()
+        
+    def update_profile(self):
+        self.update()
+        
     @classmethod
-    def get_by_id(cls,id):
-        profile = Profile.objects.get(user = id)
+    def search_profile(cls,username):
+        profile=Profile.objects.filter(user_id=username)
+        
         return profile
-    
-    @classmethod
-    def filter_by_id(cls,id): 
-        profile = Profile.objects.filter(user = id).first()
-        return profile
-    
-   
+
     
     def __str__(self):
         return self.bio
