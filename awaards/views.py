@@ -5,9 +5,11 @@ from .forms import ProfileForm, ProjectForm
 
 # Create your views here.
 def index(request):
-
-    return render(request, 'index.html') 
+    project = Project.objects.all()
+    return render(request, 'index.html', {'project':project}) 
 def create_profile(request):
+  
+    
     
     current_user = request.user
     if request.method == 'POST':
@@ -27,6 +29,19 @@ def profile(request):
     current_user = request.user
     profile = Profile.objects.filter(user=current_user.id)
     print(profile)
-    project= Project.get_profile_projects(id=project_id)
+    project= Project.objects.all()
     
-    return render(request,'profile.html',{'profile':profile,'details':details,'project':project})
+    return render(request,'profile.html',{'profile':profile,'project':project})
+def upload_project(request):
+current_user = request.user
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            index= form.save(commit=False)
+            index.profile =current_user
+            form.save()
+        return redirect('index')
+    else:
+        form =ProjectForm()
+            
+    return render(request,'project-upload.html',{"form":form,})
