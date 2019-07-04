@@ -5,6 +5,7 @@
 <br><br><br>
   <div class="container">
     <div class="row">
+    {%for profile in profile%}
       <div class="col-md-6 col-sm-12">
         <img src="{{profile.profile_pic.url}}" alt="" width="150px" height="150px" class="rounded-circle">
       </div>
@@ -26,6 +27,7 @@
       </div>
     </div>
     <br><hr>
+    {%endfor%}
     <div class="row">
       {%for upload in project%}
       <div class="col-md-4 image-holder ">

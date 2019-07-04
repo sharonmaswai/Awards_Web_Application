@@ -38,6 +38,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.bio
 class Project(models.Model):
+    profile = models.ForeignKey(User,null=True,on_delete=models.CASCADE) 
     title = models.CharField(max_length=100)
     description = models.TextField()
     technology = models.CharField(max_length=20)

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Profile, Project
 from django.contrib.auth.models import User
 from .forms import ProfileForm, ProjectForm
@@ -18,19 +18,15 @@ def create_profile(request):
             profile.user=current_user.id
             profile.save()
 
-        return redirect('index')
+        return redirect('profile')
     else:
         form = ProfileForm()
 
     return render(request, 'profile-form.html', {"form":form})
-def profile(request, username):
-    profile = User.objects.get(username=username)
-    try:
-        #details = Profile.get_by_id(profile.id)
-        projects = Project.get_profile_projects(id=project_id)
-        
-    except:
-        #details = Profile.filter_by_id(profile.id)
-
-        projects = Project.get_profile_projects(profile.id)
-return render(request,'profile.html',{'profile':profile,'details':details,'projects':projects})
+def profile(request):
+    current_user = request.user
+    profile = Profile.objects.filter(user=current_user.id)
+    print(profile)
+    project= Project.get_profile_projects(id=project_id)
+    
+    return render(request,'profile.html',{'profile':profile,'details':details,'project':project})
