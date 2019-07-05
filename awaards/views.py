@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Profile, Project, Rating
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, ProjectForm, RateForm
 
 # Create your views here.
@@ -20,8 +21,9 @@ def create_profile(request):
         return redirect('profile')
     else:
         form = ProfileForm()
-
     return render(request, 'profile-form.html', {"form":form})
+
+@login_required(login_url='/accounts/login/')    
 def profile(request):
     current_user = request.user
     profile = Profile.objects.filter(user=current_user.id)
@@ -29,6 +31,7 @@ def profile(request):
     project= Project.objects.all()
     
     return render(request,'profile.html',{'profile':profile,'project':project})
+@login_required(login_url='/accounts/login/')
 def upload_project(request):
     current_user = request.user
     if request.method == 'POST':
@@ -42,9 +45,11 @@ def upload_project(request):
         form =ProjectForm()
             
     return render(request,'project-upload.html',{"form":form,})
+@login_required(login_url='/accounts/login/')
 def projects(request):
     projects = Project.objects.all()
     return render(request, 'projects.html', {'projects':projects}) 
+@login_required(login_url='/accounts/login/')
 def search_results(request):
     
     if 'search_project' in request.GET and request.GET['search_project']:
@@ -53,6 +58,7 @@ def search_results(request):
         searched_item=Project.search_project(search_term)
         
     return render(request,'search.html',{'searched_item':searched_item})  
+@login_required(login_url='/accounts/login/')
 def rate(request,id):
     
     project=Project.objects.get(id=id)
@@ -73,6 +79,7 @@ def rate(request,id):
         form=RateForm()
     
     return render(request, 'rating.html', {'form':form, 'project':project})
+@login_required(login_url='/accounts/login/')
 def rate_project(request,project_id):
    
     projects=Project.objects.filter(id=project_id)
@@ -92,4 +99,3 @@ def rate_project(request,project_id):
         mean_rate=total_rating  
     
     return render(request, 'single-project.html',{'projects':projects,'mean_rate':mean_rate})
-
